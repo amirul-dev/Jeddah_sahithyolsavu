@@ -55,6 +55,7 @@ st.markdown(
 # Sidebar content
 color_logo = f"https://raw.githubusercontent.com/amirul-dev/jeddah_sahithyolsavu_files/refs/heads/main/color_logo.png"
 new_logo = f"https://raw.githubusercontent.com/amirul-dev/jeddah_sahithyolsavu_files/refs/heads/main/new_logo.png"
+QR_code = f"https://raw.githubusercontent.com/amirul-dev/Jeddah_sahithyolsavu/refs/heads/main/QR2.png"
 
 # Create two columns for the title and the image
 colmain1, colmain2 = st.columns([1,2])  # Adjust the ratios as needed
@@ -70,7 +71,20 @@ with colmain1:
     """
     # Display the video in the sidebar
     st.markdown(video_html, unsafe_allow_html=True)
-    ########################3  
+    ########################3 
+    
+    # Center the "Scan Me" title
+    st.markdown("<h1 style='text-align: center;'>Scan Me</h1>", unsafe_allow_html=True)
+    
+    # Center the QR code image with 50% of the column width
+    qr_html = f"""
+    <div style="display: flex; justify-content: center;">
+        <img src="{QR_code}" style="width: 50%; max-width: 300px;">
+    </div>
+    """
+    st.markdown(qr_html, unsafe_allow_html=True)
+        
+    
 
 with colmain2:
     # Title of the app in the first column
