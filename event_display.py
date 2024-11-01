@@ -63,7 +63,7 @@ with colmain1:
     st.image(color_logo, width=200)
     ############Youtube Video
     # Create the embed URL with parameters to minimize UI elements
-    video_url = f"https://www.youtube.com/embed/{youtube_video_id}?autoplay=1&mute=1&controls=1&showinfo=1&modestbranding=1&rel=0&disablekb=1"
+    video_url = f"https://www.youtube.com/embed/{youtube_video_id}?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&disablekb=1"
     # HTML to embed the YouTube video in the sidebar
     video_html = f"""
     <iframe width="100%" height="300" src="{video_url}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
