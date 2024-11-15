@@ -30,12 +30,11 @@ def load_schedule_data():
         
         # Check if the DataFrame is empty
         if not df.empty:
-            dfs = pd.concat([dfs, df], ignore_index=True)
-    filtered_dfs = dfs[dfs['Status'].isin(['On-Stage', 'Next'])]        
-    del filtered_dfs['SI']
-    del filtered_dfs['Result']
+            dfs = pd.concat([dfs, df], ignore_index=True)      
+    del dfs['SI']
+    del dfs['Result']
 
-    return filtered_dfs
+    return dfs
 
 # Load data from the Excel file every time the app reruns
 data = load_schedule_data()
@@ -73,7 +72,8 @@ with column2:
 
 # Filter the DataFrame based on the selected stage
 if selected_stage == "All":
-    filtered_df = data
+    # filtered_df = data
+    filtered_df = data[data['Status'].isin(['On-Stage', 'Next'])]  
 else:
     filtered_df = data[data["Stage"] == selected_stage]
 
@@ -129,8 +129,41 @@ st.markdown(
 unsafe_allow_html=True
 )
 
+# Function to generate an HTML table with custom styling
+def generate_table_with_highlight(df):
+    # Define styles for different statuses
+    highlight_style = "background-color: lightgreen; color: black; font-weight: bold;"
+    
+    # Start building the table HTML
+    table_html = '<table class="custom-table">'
+    
+    # Add table headers
+    table_html += "<thead><tr>"
+    for column in df.columns:
+        table_html += f"<th>{column}</th>"
+    table_html += "</tr></thead>"
+    
+    # Add table rows with custom cell styles
+    table_html += "<tbody>"
+    for _, row in df.iterrows():
+        table_html += "<tr>"
+        for col in df.columns:
+            cell_value = row[col]
+            cell_style = highlight_style if col == "Status" and cell_value == "On-Stage" else ""
+            table_html += f'<td style="{cell_style}">{cell_value}</td>'
+        table_html += "</tr>"
+    table_html += "</tbody></table>"
+    
+    return table_html
+
+# Generate the styled table
+styled_table_html = generate_table_with_highlight(filtered_df)
+
+# Display the styled table
+st.markdown(f'<div class="custom-table-container">{styled_table_html}</div>', unsafe_allow_html=True)
+
 # Generate HTML table with data
-table_html = filtered_df.to_html(classes="custom-table", index=False)
+# table_html = filtered_df.to_html(classes="custom-table", index=False)
 
 # Display table in a scrollable container
-st.markdown(f'<div class="custom-table-container">{table_html}</div>', unsafe_allow_html=True)
+# st.markdown(f'<div class="custom-table-container">{table_html}</div>', unsafe_allow_html=True)
