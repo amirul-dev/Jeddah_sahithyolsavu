@@ -32,7 +32,7 @@ def load_schedule_data():
         if not df.empty:
             dfs = pd.concat([dfs, df], ignore_index=True)
     filtered_dfs = dfs[dfs['Status'].isin(['On-Stage', 'Next'])]        
-    del filtered_dfs['SI']
+    del filtered_dfs[['SI','Result']]
 
     return filtered_dfs
 
